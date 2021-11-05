@@ -4,7 +4,6 @@ import com.takehome.firefighter.domain.model.Firefighter;
 
 import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Supplier;
 
 public interface FirefightersRepository {
 

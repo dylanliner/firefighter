@@ -1,7 +1,5 @@
 package com.takehome.firefighter.domain.model;
 
-import org.apache.logging.log4j.spi.ObjectThreadContextMap;
-
 import java.util.Objects;
 import java.util.UUID;
 

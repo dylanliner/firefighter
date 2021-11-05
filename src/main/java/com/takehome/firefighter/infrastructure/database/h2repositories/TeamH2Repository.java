@@ -5,8 +5,6 @@ import com.takehome.firefighter.domain.persistence.TeamRepository;
 import com.takehome.firefighter.infrastructure.database.entities.TeamEntity;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
-
 @Repository
 public class TeamH2Repository implements TeamRepository {
 
@@ -19,11 +17,6 @@ public class TeamH2Repository implements TeamRepository {
     @Override
     public void save(Team team) {
         teamEntityH2Repository.save(TeamEntity.toEntity(team));
-    }
-
-    @Override
-    public Team findById(UUID teamId) {
-        return teamEntityH2Repository.findById(teamId).orElseThrow().toDomain();
     }
 
     public void deleteAll() {

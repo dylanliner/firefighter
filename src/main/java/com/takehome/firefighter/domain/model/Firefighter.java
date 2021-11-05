@@ -1,8 +1,5 @@
 package com.takehome.firefighter.domain.model;
 
-import com.sun.istack.NotNull;
-import org.springframework.validation.annotation.Validated;
-
 import java.util.Objects;
 import java.util.UUID;
 
