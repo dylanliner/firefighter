@@ -42,7 +42,7 @@ class CurrentFirefighterH2RepositoryTest {
         //GIVEN
         var id = UUID.randomUUID();
         var team1 = new Team(UUID.randomUUID(), "Core qualite");
-        var expectedFirefighter = new Firefighter(id, "name", team1);
+        var expectedFirefighter = new Firefighter(id, "name", team1, true);
         teamH2Repository.save(team1);
         firefightersH2Repository.saveFirefighter(expectedFirefighter);
 

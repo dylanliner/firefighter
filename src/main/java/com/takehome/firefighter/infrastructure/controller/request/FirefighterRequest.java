@@ -23,6 +23,6 @@ public class FirefighterRequest {
     }
 
     public Firefighter toDomain() {
-        return new Firefighter(id == null ? UUID.randomUUID() : id, name, team == null ? null : team.toDomain());
+        return new Firefighter(id == null ? UUID.randomUUID() : id, name, team == null ? null : team.toDomain(), true);
     }
 }

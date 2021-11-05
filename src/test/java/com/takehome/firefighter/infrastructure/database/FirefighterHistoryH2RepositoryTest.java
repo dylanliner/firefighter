@@ -43,7 +43,7 @@ class FirefighterHistoryH2RepositoryTest {
         //GIVEN
         var team1 = new Team(UUID.randomUUID(), "Core qualite");
         var id = UUID.randomUUID();
-        var firefighter = new Firefighter(id, "name", team1);
+        var firefighter = new Firefighter(id, "name", team1, true);
         var date = ZonedDateTime.now();
         teamH2Repository.save(team1);
         firefightersH2Repository.saveFirefighter(firefighter);

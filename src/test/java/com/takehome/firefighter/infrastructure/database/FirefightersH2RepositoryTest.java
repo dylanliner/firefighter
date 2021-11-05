@@ -28,13 +28,6 @@ class FirefightersH2RepositoryTest {
     @Autowired
     TeamH2Repository teamH2Repository;
 
-    @Autowired
-    CurrentFirefighterH2Repository currentFirefighterH2Repository;
-
-    @Autowired
-    FirefighterHistoryH2Repository firefighterHistoryH2Repository;
-
-
     @BeforeEach
     public void clean() {
         firefighterH2Repository.deleteAll();
@@ -47,9 +40,9 @@ class FirefightersH2RepositoryTest {
         var team1 = new Team(UUID.randomUUID(), "team");
         teamH2Repository.save(team1);
 
-        var firefighter1 = new Firefighter(UUID.randomUUID(), "name", team1);
-        var firefighter2 = new Firefighter(UUID.randomUUID(), "name1", team1);
-        var firefighter3 = new Firefighter(UUID.randomUUID(), "name2", team1);
+        var firefighter1 = new Firefighter(UUID.randomUUID(), "name", team1, true);
+        var firefighter2 = new Firefighter(UUID.randomUUID(), "name1", team1, true);
+        var firefighter3 = new Firefighter(UUID.randomUUID(), "name2", team1, true);
         firefighterH2Repository.saveFirefighter(firefighter2);
         firefighterH2Repository.saveFirefighter(firefighter1);
         firefighterH2Repository.saveFirefighter(firefighter3);
@@ -62,6 +55,27 @@ class FirefightersH2RepositoryTest {
     }
 
     @Test
+    public void shouldFindNextFirefighter_whenNextFirefighterAlphabeticallyIsUnavailable() {
+        //GIVEN
+        var team1 = new Team(UUID.randomUUID(), "team");
+        teamH2Repository.save(team1);
+
+        var firefighter1 = new Firefighter(UUID.randomUUID(), "name", team1, true);
+        var firefighter2 = new Firefighter(UUID.randomUUID(), "name1", team1, false);
+        var firefighter3 = new Firefighter(UUID.randomUUID(), "name2", team1, true);
+        firefighterH2Repository.saveFirefighter(firefighter2);
+        firefighterH2Repository.saveFirefighter(firefighter1);
+        firefighterH2Repository.saveFirefighter(firefighter3);
+
+        //WHEN
+        var actualFirefighter = firefighterH2Repository.findNextFirefighter(firefighter1);
+
+        //THEN
+        assertThat(actualFirefighter).isEqualTo(Optional.of(firefighter3));
+    }
+
+
+    @Test
     public void shouldFindNextFirefighter_whenOtherFirefightersWithSameNames() {
         //GIVEN
         var team1 = new Team(UUID.randomUUID(), "team");
@@ -70,9 +84,9 @@ class FirefightersH2RepositoryTest {
         teamH2Repository.save(team1);
         teamH2Repository.save(team2);
         teamH2Repository.save(team3);
-        var firefighter1 = new Firefighter(UUID.randomUUID(), "name", team1);
-        var firefighter2 = new Firefighter(UUID.randomUUID(), "name", team2);
-        var firefighter3 = new Firefighter(UUID.randomUUID(), "name", team3);
+        var firefighter1 = new Firefighter(UUID.randomUUID(), "name", team1, true);
+        var firefighter2 = new Firefighter(UUID.randomUUID(), "name", team2, true);
+        var firefighter3 = new Firefighter(UUID.randomUUID(), "name", team3, true);
         firefighterH2Repository.saveFirefighter(firefighter2);
         firefighterH2Repository.saveFirefighter(firefighter1);
         firefighterH2Repository.saveFirefighter(firefighter3);
@@ -88,7 +102,7 @@ class FirefightersH2RepositoryTest {
     public void shouldFindNextFirefighter_whenFirefighterIsUnique() {
         //GIVEN
         var team1 = new Team(UUID.randomUUID(), "team");
-        var firefighter1 = new Firefighter(UUID.randomUUID(), "name", team1);
+        var firefighter1 = new Firefighter(UUID.randomUUID(), "name", team1, true);
         teamH2Repository.save(team1);
         firefighterH2Repository.saveFirefighter(firefighter1);
 
@@ -103,7 +117,7 @@ class FirefightersH2RepositoryTest {
     public void shouldFindNull_whenNoFirefighter() {
         //GIVEN
         var team1 = new Team(UUID.randomUUID(), "team");
-        var firefighter1 = new Firefighter(UUID.randomUUID(), "name", team1);
+        var firefighter1 = new Firefighter(UUID.randomUUID(), "name", team1, true);
 
         //WHEN
         var actualFirefighter = firefighterH2Repository.findNextFirefighter(firefighter1);
@@ -116,9 +130,9 @@ class FirefightersH2RepositoryTest {
     public void shouldFindNextFirefighter_whenNoMoreFirefighterAlphabetically() {
         //GIVEN
         var team1 = new Team(UUID.randomUUID(), "team");
-        var firefighter1 = new Firefighter(UUID.randomUUID(), "name", team1);
-        var firefighter2 = new Firefighter(UUID.randomUUID(), "name1", team1);
-        var firefighter3 = new Firefighter(UUID.randomUUID(), "name2", team1);
+        var firefighter1 = new Firefighter(UUID.randomUUID(), "name", team1, true);
+        var firefighter2 = new Firefighter(UUID.randomUUID(), "name1", team1, true);
+        var firefighter3 = new Firefighter(UUID.randomUUID(), "name2", team1, true);
         teamH2Repository.save(team1);
         firefighterH2Repository.saveFirefighter(firefighter1);
         firefighterH2Repository.saveFirefighter(firefighter2);
@@ -135,7 +149,7 @@ class FirefightersH2RepositoryTest {
     public void shoulSaveFirefighterWithTeam_whenTeamUnknown() {
         //GIVEN
         var team1 = new Team(UUID.randomUUID(), "team");
-        var firefighter1 = new Firefighter(UUID.randomUUID(), "name", team1);
+        var firefighter1 = new Firefighter(UUID.randomUUID(), "name", team1, true);
 
         //WHEN
         firefighterH2Repository.saveFirefighter(firefighter1);
@@ -146,9 +160,26 @@ class FirefightersH2RepositoryTest {
     }
 
     @Test
+    public void shoulUpdateAvailability() {
+        //GIVEN
+        var team1 = new Team(UUID.randomUUID(), "team");
+        final UUID id = UUID.randomUUID();
+        var firefighter1 = new Firefighter(id, "name", team1, true);
+        firefighterH2Repository.saveFirefighter(firefighter1);
+
+        //WHEN
+        firefighterH2Repository.updateFirefighterAvailability(id, false);
+
+        //THEN
+        var actualFirefighters = firefighterH2Repository.findAll();
+        var expected = new Firefighter(id, "name", team1, false);
+        assertThat(actualFirefighters).containsExactly(expected);
+    }
+
+    @Test
     public void shoulSaveFirefighter_whenNoTeam() {
         //GIVEN
-        var firefighter1 = new Firefighter(UUID.randomUUID(), "name", null);
+        var firefighter1 = new Firefighter(UUID.randomUUID(), "name", null, true);
 
         //WHEN
         firefighterH2Repository.saveFirefighter(firefighter1);
@@ -165,8 +196,8 @@ class FirefightersH2RepositoryTest {
         var team1 = new Team(teamId, "team");
         var team2 = new Team(teamId, "team2");
         final UUID firefighterId = UUID.randomUUID();
-        var firefighter1 = new Firefighter(firefighterId, "name", team1);
-        var firefighter2 = new Firefighter(firefighterId, "name2", team2);
+        var firefighter1 = new Firefighter(firefighterId, "name", team1, true);
+        var firefighter2 = new Firefighter(firefighterId, "name2", team2, true);
         teamH2Repository.save(team1);
         firefighterH2Repository.saveFirefighter(firefighter1);
 

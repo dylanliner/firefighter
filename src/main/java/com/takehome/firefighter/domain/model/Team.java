@@ -7,8 +7,8 @@ import java.util.UUID;
 
 public class Team {
 
-    private UUID id;
-    private String teamName;
+    private final UUID id;
+    private final String teamName;
 
     public Team(UUID id, String teamName) {
         this.id = Objects.requireNonNull(id);

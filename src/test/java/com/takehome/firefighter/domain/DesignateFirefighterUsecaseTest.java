@@ -35,9 +35,9 @@ class DesignateFirefighterUsecaseTest {
         //GIVEN
         var team1 = new Team(UUID.randomUUID(), "Core qualite");
         var team2 = new Team(UUID.randomUUID(), "Core qualite 2");
-        var previousFirefighter = new Firefighter(UUID.randomUUID(), "name", team1);
+        var previousFirefighter = new Firefighter(UUID.randomUUID(), "name", team1, true);
         doReturn(Optional.of(previousFirefighter)).when(currentFirefighterRepository).findPreviousFirefighter();
-        var nextFirefighter = new Firefighter(UUID.randomUUID(), "name2", team2);
+        var nextFirefighter = new Firefighter(UUID.randomUUID(), "name2", team2, true);
         doReturn(Optional.of(nextFirefighter)).when(firefightersRepository).findNextFirefighter(previousFirefighter);
 
         var designatedFirefighterUsecase = new DesignateFirefighterUsecase(firefightersRepository, currentFirefighterRepository, firefighterHistoryRepository);

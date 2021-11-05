@@ -36,6 +36,12 @@ public class FirefightersH2Repository implements FirefightersRepository {
         firefighterEntityH2Repository.save(FirefighterEntity.toEntity(firefighter));
     }
 
+    @Override
+    public void updateFirefighterAvailability(UUID firefighterId, boolean available) {
+        var firefighter = firefighterEntityH2Repository.findById(firefighterId).orElseThrow();
+        firefighter.setAvailable(available);
+    }
+
 
     public void deleteAll() {
         firefighterEntityH2Repository.deleteAll();

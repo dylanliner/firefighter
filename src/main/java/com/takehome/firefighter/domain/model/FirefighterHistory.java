@@ -5,9 +5,9 @@ import java.util.Objects;
 
 public class FirefighterHistory {
 
-    private Firefighter firefighter;
+    private final Firefighter firefighter;
 
-    private ZonedDateTime date;
+    private final ZonedDateTime date;
 
     public FirefighterHistory(Firefighter firefighter, ZonedDateTime date) {
         this.firefighter = firefighter;

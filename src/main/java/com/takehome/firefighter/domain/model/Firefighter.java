@@ -14,11 +14,17 @@ public class Firefighter {
 
     private Team team;
 
+    private final boolean available;
 
-    public Firefighter(UUID id, String name, Team team) {
+    public Firefighter(UUID id, String name, Team team, boolean available) {
         this.id = Objects.requireNonNull(id);
         this.name = name;
         this.team = team;
+        this.available = available;
+    }
+
+    public boolean isAvailable() {
+        return available;
     }
 
     public UUID getId() {
@@ -50,11 +56,11 @@ public class Firefighter {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Firefighter that = (Firefighter) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(team, that.team);
+        return available == that.available && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(team, that.team);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, team);
+        return Objects.hash(id, name, team, available);
     }
 }

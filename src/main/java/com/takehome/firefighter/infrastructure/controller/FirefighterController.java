@@ -23,14 +23,14 @@ public class FirefighterController {
 
     private final QueryFirefighterHistoryUseCase queryFirefighterHistoryUseCase;
 
-    private final ChangeFirefighterAvailabilityUseCase deactivateFirefighterUseCase;
+    private final ChangeFirefighterAvailabilityUseCase changeFirefighterAvailabilityUseCase;
 
     private final CreateFirefighterUseCase createFirefighterUseCase;
 
     public FirefighterController(DesignateFirefighterUsecase designateFirefighterUsecase, QueryFirefighterHistoryUseCase queryFirefighterHistoryUseCase, ChangeFirefighterAvailabilityUseCase deactivateFirefighterUseCase, CreateFirefighterUseCase createFirefighterUseCase) {
         this.designateFirefighterUsecase = designateFirefighterUsecase;
         this.queryFirefighterHistoryUseCase = queryFirefighterHistoryUseCase;
-        this.deactivateFirefighterUseCase = deactivateFirefighterUseCase;
+        this.changeFirefighterAvailabilityUseCase = deactivateFirefighterUseCase;
         this.createFirefighterUseCase = createFirefighterUseCase;
     }
 
@@ -43,7 +43,7 @@ public class FirefighterController {
     @PostMapping("/firefighter")
     ResponseEntity<Void> createFirefighter(@RequestBody FirefighterRequest firefighterRequest) {
         createFirefighterUseCase.createFirefighter(firefighterRequest.toDomain());
-        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/firefighter")
@@ -52,10 +52,10 @@ public class FirefighterController {
         return ResponseEntity.of(Optional.of(firefighterHistoryList.stream().map(FirefighterHistoryDTO::toDto).collect(Collectors.toList())));
     }
 
-    @PostMapping("/firefighter/{firefighterId}")
-    ResponseEntity<Void> updateFirefighterAvailability(@PathVariable UUID firefighterId, @RequestParam boolean availability) {
-        deactivateFirefighterUseCase.updateFirefighterAvailability(firefighterId, availability);
-        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    @PutMapping("/firefighter/{firefighterId}")
+    ResponseEntity<Void> updateFirefighterAvailability(@PathVariable UUID firefighterId, @RequestParam boolean available) {
+        changeFirefighterAvailabilityUseCase.updateFirefighterAvailability(firefighterId, available);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 

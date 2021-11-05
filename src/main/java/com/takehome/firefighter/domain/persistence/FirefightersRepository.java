@@ -13,4 +13,5 @@ public interface FirefightersRepository {
 
     void saveFirefighter(Firefighter firefighter);
 
+    void updateFirefighterAvailability(UUID firefighterId, boolean available);
 }

@@ -45,7 +45,7 @@ class FirefighterControllerTest {
     @Test
     public void shouldReturnDesignatedFirefighter() throws Exception {
         var team1 = new Team(UUID.fromString("16047f1e-e7e1-3c1d-b416-1d8d090f9df8"), "Core qualite");
-        var firefighter = new Firefighter(UUID.fromString("16047f1e-e7e1-3c1d-b416-1d8d090f9df8"), "Fanch", team1);
+        var firefighter = new Firefighter(UUID.fromString("16047f1e-e7e1-3c1d-b416-1d8d090f9df8"), "Fanch", team1, true);
         when(designateFirefighterUsecase.designateFirefighter()).thenReturn(firefighter);
         this.mockMvc.perform(post("/firefighter/designateFirefighter")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().json(("{\n" +
@@ -60,7 +60,7 @@ class FirefighterControllerTest {
 
     @Test
     public void shouldReturnDesignatedFirefighter_withNoTeam() throws Exception {
-        var firefighter = new Firefighter(UUID.fromString("16047f1e-e7e1-3c1d-b416-1d8d090f9df8"), "Fanch", null);
+        var firefighter = new Firefighter(UUID.fromString("16047f1e-e7e1-3c1d-b416-1d8d090f9df8"), "Fanch", null, true);
         when(designateFirefighterUsecase.designateFirefighter()).thenReturn(firefighter);
         this.mockMvc.perform(post("/firefighter/designateFirefighter")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().json(("{\n" +
@@ -73,8 +73,8 @@ class FirefighterControllerTest {
     @Test
     public void shouldReturnFirefighterHistory() throws Exception {
         var team1 = new Team(UUID.fromString("16047f1e-e7e1-3c1d-b416-1d8d090f9df8"), "Core qualite");
-        var firefighter1 = new Firefighter(UUID.fromString("16047f1e-e7e1-3c1d-b416-1d8d090f9df8"), "Fanch", team1);
-        var firefighter2 = new Firefighter(UUID.fromString("16047f1e-e7e1-3c1d-b416-1d8d090f9df8"), "Fanch", team1);
+        var firefighter1 = new Firefighter(UUID.fromString("16047f1e-e7e1-3c1d-b416-1d8d090f9df8"), "Fanch", team1, true);
+        var firefighter2 = new Firefighter(UUID.fromString("16047f1e-e7e1-3c1d-b416-1d8d090f9df8"), "Fanch", team1, true);
         var date1 = ZonedDateTime.parse("2021-11-04T18:07:28.932099+01:00");
         var date2 = ZonedDateTime.parse("2021-11-04T18:07:28.932099+01:00");
         var firefighterHistory1 = new FirefighterHistory(firefighter1, date1);
@@ -108,9 +108,9 @@ class FirefighterControllerTest {
     }
 
     @Test
-    public void shouldDeleteFirefighter() throws Exception {
+    public void shouldChangeFirefighterAvailability() throws Exception {
         var firefighterId = UUID.randomUUID();
-        this.mockMvc.perform(post("/firefighter/" + firefighterId)).andDo(print()).andExpect(status().isNoContent());
+        this.mockMvc.perform(put("/firefighter/" + firefighterId + "?available=false")).andDo(print()).andExpect(status().isNoContent());
     }
 
     @Test
