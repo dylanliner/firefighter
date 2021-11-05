@@ -27,17 +27,18 @@ public class DesignateFirefighterUsecase {
     @Transactional
     public Firefighter designateFirefighter() {
 
-        var preiousFirefighter = currentFirefighterRepository.findPreviousFirefighter();
-
-
-        var currentFirefighter = preiousFirefighter.isPresent() ?
-                firefightersRepository.findNextFirefighter(preiousFirefighter.get()).orElseThrow() :
-                firefightersRepository.findFirstFirefighterAlphabetically().orElseThrow();
+        Firefighter currentFirefighter = getFirefighter();
 
         currentFirefighterRepository.updateCurrentFirefighter(currentFirefighter.getId());
 
         firefighterHistoryRepository.updateFireFighterHistory(currentFirefighter.getId(), ZonedDateTime.now());
 
         return currentFirefighter;
+    }
+
+    private Firefighter getFirefighter() {
+        var previousFirefighter = currentFirefighterRepository.findPreviousFirefighter();
+        return previousFirefighter.flatMap(firefightersRepository::findNextFirefighterAlphabetically)
+                .or(firefightersRepository::findFirstFirefighterAlphabetically).orElseThrow();
     }
 }

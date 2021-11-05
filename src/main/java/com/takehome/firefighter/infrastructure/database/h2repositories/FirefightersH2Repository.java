@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 @Repository
@@ -21,14 +22,15 @@ public class FirefightersH2Repository implements FirefightersRepository {
 
 
     @Override
-    public Optional<Firefighter> findNextFirefighter(Firefighter currentFirefighterName) {
-        return firefighterEntityH2Repository.findNextFirefighter(currentFirefighterName.getId(), currentFirefighterName.getName())
-                .or(firefighterEntityH2Repository::findFirstFirefighterAlphabetically).map(FirefighterEntity::toDomain);
+    public Optional<Firefighter> findNextFirefighterAlphabetically(Firefighter currentFirefighterName) {
+        return firefighterEntityH2Repository.findNextFirefighterAlphabetically(currentFirefighterName.getId(), currentFirefighterName.getName())
+                .map(FirefighterEntity::toDomain);
     }
 
     @Override
     public Optional<Firefighter> findFirstFirefighterAlphabetically() {
-        return firefighterEntityH2Repository.findFirstFirefighterAlphabetically().map(FirefighterEntity::toDomain);
+        return firefighterEntityH2Repository.findFirstFirefighterAlphabetically()
+                .map(FirefighterEntity::toDomain);
     }
 
     @Override

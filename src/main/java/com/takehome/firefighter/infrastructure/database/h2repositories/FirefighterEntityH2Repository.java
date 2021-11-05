@@ -11,7 +11,7 @@ public interface FirefighterEntityH2Repository extends JpaRepository<Firefighter
 
 
     @Query(value = "select * from FIREFIGHTER f where f.name >= ?2 and f.id != ?1 and f.available is true order by f.name ASC limit 1", nativeQuery = true)
-    Optional<FirefighterEntity> findNextFirefighter(UUID currentFirefighterid, String currentFirefighterName);
+    Optional<FirefighterEntity> findNextFirefighterAlphabetically(UUID currentFirefighterid, String currentFirefighterName);
 
     @Query(value = "select * from FIREFIGHTER f where f.available is true order by f.name ASC limit 1", nativeQuery = true)
     Optional<FirefighterEntity> findFirstFirefighterAlphabetically();

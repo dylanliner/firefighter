@@ -4,10 +4,11 @@ import com.takehome.firefighter.domain.model.Firefighter;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Supplier;
 
 public interface FirefightersRepository {
 
-    Optional<Firefighter> findNextFirefighter(Firefighter currentFirefighterName);
+    Optional<Firefighter> findNextFirefighterAlphabetically(Firefighter currentFirefighterName);
 
     Optional<Firefighter> findFirstFirefighterAlphabetically();
 
