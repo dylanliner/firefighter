@@ -2,6 +2,7 @@ package com.takehome.firefighter.domain.usecases;
 
 import com.takehome.firefighter.domain.persistence.FirefightersRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -14,6 +15,7 @@ public class ChangeFirefighterAvailabilityUseCase {
         this.firefightersRepository = firefightersRepository;
     }
 
+    @Transactional
     public void updateFirefighterAvailability(UUID firefighterId, boolean available) {
         firefightersRepository.updateFirefighterAvailability(firefighterId, available);
     }

@@ -1,9 +1,9 @@
 package com.takehome.firefighter.domain.usecases;
 
-import com.takehome.firefighter.domain.persistence.FirefightersRepository;
 import com.takehome.firefighter.domain.model.Firefighter;
+import com.takehome.firefighter.domain.persistence.FirefightersRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CreateFirefighterUseCase {
@@ -14,6 +14,7 @@ public class CreateFirefighterUseCase {
         this.firefightersRepository = firefightersRepository;
     }
 
+    @Transactional
     public void createFirefighter(Firefighter firefighter) {
         firefightersRepository.saveFirefighter(firefighter);
     }
