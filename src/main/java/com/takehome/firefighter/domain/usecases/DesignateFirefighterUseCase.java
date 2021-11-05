@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.ZonedDateTime;
 
 @Service
-public class DesignateFirefighterUsecase {
+public class DesignateFirefighterUseCase {
 
     private final FirefightersRepository firefightersRepository;
 
@@ -18,7 +18,7 @@ public class DesignateFirefighterUsecase {
 
     private final FirefighterHistoryRepository firefighterHistoryRepository;
 
-    public DesignateFirefighterUsecase(FirefightersRepository firefightersRepository, CurrentFirefighterRepository currentFirefighterRepository, FirefighterHistoryRepository firefighterHistoryRepository) {
+    public DesignateFirefighterUseCase(FirefightersRepository firefightersRepository, CurrentFirefighterRepository currentFirefighterRepository, FirefighterHistoryRepository firefighterHistoryRepository) {
         this.firefightersRepository = firefightersRepository;
         this.currentFirefighterRepository = currentFirefighterRepository;
         this.firefighterHistoryRepository = firefighterHistoryRepository;

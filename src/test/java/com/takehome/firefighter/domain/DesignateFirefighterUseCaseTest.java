@@ -1,6 +1,6 @@
 package com.takehome.firefighter.domain;
 
-import com.takehome.firefighter.domain.usecases.DesignateFirefighterUsecase;
+import com.takehome.firefighter.domain.usecases.DesignateFirefighterUseCase;
 import com.takehome.firefighter.domain.persistence.CurrentFirefighterRepository;
 import com.takehome.firefighter.domain.persistence.FirefighterHistoryRepository;
 import com.takehome.firefighter.domain.persistence.FirefightersRepository;
@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class DesignateFirefighterUsecaseTest {
+class DesignateFirefighterUseCaseTest {
 
     @Spy
     private FirefightersRepository firefightersRepository;
@@ -40,7 +40,7 @@ class DesignateFirefighterUsecaseTest {
         var nextFirefighter = new Firefighter(UUID.randomUUID(), "name2", team2, true);
         doReturn(Optional.of(nextFirefighter)).when(firefightersRepository).findNextFirefighterAlphabetically(previousFirefighter);
 
-        var designatedFirefighterUsecase = new DesignateFirefighterUsecase(firefightersRepository, currentFirefighterRepository, firefighterHistoryRepository);
+        var designatedFirefighterUsecase = new DesignateFirefighterUseCase(firefightersRepository, currentFirefighterRepository, firefighterHistoryRepository);
 
         //WHEN
         var actualFirefighter = designatedFirefighterUsecase.designateFirefighter();
@@ -63,7 +63,7 @@ class DesignateFirefighterUsecaseTest {
         doReturn(Optional.empty()).when(firefightersRepository).findNextFirefighterAlphabetically(previousFirefighter);
         doReturn(Optional.of(nextFirefighter)).when(firefightersRepository).findFirstFirefighterAlphabetically();
 
-        var designatedFirefighterUsecase = new DesignateFirefighterUsecase(firefightersRepository, currentFirefighterRepository, firefighterHistoryRepository);
+        var designatedFirefighterUsecase = new DesignateFirefighterUseCase(firefightersRepository, currentFirefighterRepository, firefighterHistoryRepository);
 
         //WHEN
         var actualFirefighter = designatedFirefighterUsecase.designateFirefighter();
@@ -82,7 +82,7 @@ class DesignateFirefighterUsecaseTest {
         var nextFirefighter = new Firefighter(UUID.randomUUID(), "name2", team2, true);
         doReturn(Optional.of(nextFirefighter)).when(firefightersRepository).findFirstFirefighterAlphabetically();
 
-        var designatedFirefighterUsecase = new DesignateFirefighterUsecase(firefightersRepository, currentFirefighterRepository, firefighterHistoryRepository);
+        var designatedFirefighterUsecase = new DesignateFirefighterUseCase(firefightersRepository, currentFirefighterRepository, firefighterHistoryRepository);
 
         //WHEN
         var actualFirefighter = designatedFirefighterUsecase.designateFirefighter();

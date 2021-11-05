@@ -6,8 +6,8 @@ import java.util.UUID;
 
 public class TeamRequest {
 
-    private UUID id;
-    private String teamName;
+    private final UUID id;
+    private final String teamName;
 
     public TeamRequest(UUID id, String teamName) {
         this.id = id;

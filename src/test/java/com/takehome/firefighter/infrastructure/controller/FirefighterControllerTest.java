@@ -5,7 +5,7 @@ import com.takehome.firefighter.domain.model.FirefighterHistory;
 import com.takehome.firefighter.domain.model.Team;
 import com.takehome.firefighter.domain.usecases.CreateFirefighterUseCase;
 import com.takehome.firefighter.domain.usecases.ChangeFirefighterAvailabilityUseCase;
-import com.takehome.firefighter.domain.usecases.DesignateFirefighterUsecase;
+import com.takehome.firefighter.domain.usecases.DesignateFirefighterUseCase;
 import com.takehome.firefighter.domain.usecases.QueryFirefighterHistoryUseCase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ class FirefighterControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private DesignateFirefighterUsecase designateFirefighterUsecase;
+    private DesignateFirefighterUseCase designateFirefighterUsecase;
 
     @MockBean
     private QueryFirefighterHistoryUseCase queryFirefighterHistoryUseCase;

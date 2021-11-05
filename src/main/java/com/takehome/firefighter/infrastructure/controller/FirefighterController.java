@@ -2,7 +2,7 @@ package com.takehome.firefighter.infrastructure.controller;
 
 import com.takehome.firefighter.domain.usecases.CreateFirefighterUseCase;
 import com.takehome.firefighter.domain.usecases.ChangeFirefighterAvailabilityUseCase;
-import com.takehome.firefighter.domain.usecases.DesignateFirefighterUsecase;
+import com.takehome.firefighter.domain.usecases.DesignateFirefighterUseCase;
 import com.takehome.firefighter.domain.usecases.QueryFirefighterHistoryUseCase;
 import com.takehome.firefighter.infrastructure.controller.request.FirefighterRequest;
 import com.takehome.firefighter.infrastructure.controller.response.FirefighterDTO;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @RestController
 public class FirefighterController {
 
-    private final DesignateFirefighterUsecase designateFirefighterUsecase;
+    private final DesignateFirefighterUseCase designateFirefighterUsecase;
 
     private final QueryFirefighterHistoryUseCase queryFirefighterHistoryUseCase;
 
@@ -27,7 +27,7 @@ public class FirefighterController {
 
     private final CreateFirefighterUseCase createFirefighterUseCase;
 
-    public FirefighterController(DesignateFirefighterUsecase designateFirefighterUsecase, QueryFirefighterHistoryUseCase queryFirefighterHistoryUseCase, ChangeFirefighterAvailabilityUseCase deactivateFirefighterUseCase, CreateFirefighterUseCase createFirefighterUseCase) {
+    public FirefighterController(DesignateFirefighterUseCase designateFirefighterUsecase, QueryFirefighterHistoryUseCase queryFirefighterHistoryUseCase, ChangeFirefighterAvailabilityUseCase deactivateFirefighterUseCase, CreateFirefighterUseCase createFirefighterUseCase) {
         this.designateFirefighterUsecase = designateFirefighterUsecase;
         this.queryFirefighterHistoryUseCase = queryFirefighterHistoryUseCase;
         this.changeFirefighterAvailabilityUseCase = deactivateFirefighterUseCase;
